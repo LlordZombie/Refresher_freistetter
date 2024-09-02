@@ -18,6 +18,12 @@ public class CharacterTest {
         loadTextFile(fileName);
     }
 
+    public static void main(String[] args) {
+        CharacterTest test = new CharacterTest("ressources/characters.csv");
+        test.characters.forEach(System.out::println);
+        test.savePoints("outTests/points.txt");
+    }
+
     public void loadTextFile(String textFile) {
         try (BufferedReader b = Files.newBufferedReader(Path.of(textFile))) {
             b.lines().forEach(line -> {
@@ -25,15 +31,18 @@ public class CharacterTest {
                 if (parts.length != 6) {
                     throw new IllegalArgumentException("Invalid line: " + line);
                 }
-                if (parts[0].equalsIgnoreCase("farmer")) {
-                    characters.add(new game.Farmer(parts[1], parts[2], Integer.parseInt(parts[3]), parts[4], Integer.parseInt(parts[5])));
-                } else if (parts[0].equalsIgnoreCase("Warrior")) {
-                    characters.add(new game.Warrior(parts[1], parts[2], Integer.parseInt(parts[3]), parts[4], Integer.parseInt(parts[5])));
-                } else {
-                    throw new IllegalArgumentException("Invalid character type: " + parts[0]);
+                try {
+                    if (parts[0].equalsIgnoreCase("farmer")) {
+                        characters.add(new game.Farmer(parts[1], parts[2], Integer.parseInt(parts[3]), parts[4], Integer.parseInt(parts[5])));
+                    } else if (parts[0].equalsIgnoreCase("Warrior")) {
+                        characters.add(new game.Warrior(parts[1], parts[2], Integer.parseInt(parts[3]), parts[4], Integer.parseInt(parts[5])));
+                    } else {
+                        throw new IllegalArgumentException("Invalid character type: " + parts[0]);
+                    }
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Invalid number: " + parts[3] + " or " + parts[5]);
                 }
             });
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -53,15 +62,9 @@ public class CharacterTest {
                 energySum += character.getEnergy();
 
             }
-            b.write(energySum +"-"+ forceSum + "-" + productivitySum);
+            b.write(energySum + "-" + forceSum + "-" + productivitySum);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) {
-        CharacterTest test = new CharacterTest("ressources/characters.csv");
-        test.characters.forEach(System.out::println);
-        test.savePoints("outTests/points.txt");
     }
 }

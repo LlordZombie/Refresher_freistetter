@@ -2,7 +2,7 @@ package game;
 
 public class Warrior extends GameCharacter {
     private final String weapon;
-    private  int force;
+    private int force;
 
     public Warrior(String name, String clan, int energy, String weapon, int force) {
         super(name, clan, energy);
@@ -19,10 +19,12 @@ public class Warrior extends GameCharacter {
     public String getSlogan() {
         return "Kampf den bösen Mächten!";
     }
-public void setForce(int force) {
-         this.force = force;
-    }
+
     public int getForce() {
         return force;
+    }
+
+    public void setForce(int force) {
+        this.force = force;
     }
 }
