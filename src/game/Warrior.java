@@ -6,6 +6,9 @@ public class Warrior extends GameCharacter {
 
     public Warrior(String name, String clan, int energy, String weapon, int force) {
         super(name, clan, energy);
+        if (force < 0) {
+            throw new IllegalArgumentException("Force must be positive");
+        }
         this.weapon = weapon;
         this.force = force;
     }
@@ -25,6 +28,9 @@ public class Warrior extends GameCharacter {
     }
 
     public void setForce(int force) {
+        if (force < 0) {
+            throw new IllegalArgumentException("Force must be positive");
+        }
         this.force = force;
     }
 }

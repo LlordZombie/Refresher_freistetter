@@ -1,6 +1,8 @@
 package tests;
 
+import game.Farmer;
 import game.GameCharacter;
+import game.Warrior;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,9 +24,26 @@ public class CharacterTest {
         CharacterTest test = new CharacterTest("ressources/characters.csv");
         test.characters.forEach(System.out::println);
         test.savePoints("outTests/points.txt");
+        System.out.println();
+        Warrior firstW = test.characters.stream().filter(c -> c instanceof Warrior).map(c -> (Warrior) c).findFirst().orElse(null);
+        Farmer firstF = test.characters.stream().filter(c -> c instanceof Farmer).map(c -> (Farmer) c).findFirst().orElse(null);
+        assert firstF != null;
+        assert firstW != null;
+        System.out.println(firstW);
+        System.out.println(firstF);
+        firstW.setEnergy(123);
+        firstF.setEnergy(123);
+        firstF.setProductivity(123);
+        firstW.setForce(123);
+        System.out.println(firstW);
+        System.out.println(firstF);
+        System.out.println(firstW.getSlogan());
+        System.out.println(firstF.getSlogan());
+
     }
 
     public void loadTextFile(String textFile) {
+        characters.clear();
         try (BufferedReader b = Files.newBufferedReader(Path.of(textFile))) {
             b.lines().forEach(line -> {
                 String[] parts = line.split(";");
@@ -54,10 +73,10 @@ public class CharacterTest {
         int forceSum = 0;
         try (BufferedWriter b = Files.newBufferedWriter(Path.of(fileName))) {
             for (GameCharacter character : characters) {
-                if (character instanceof game.Farmer) {
-                    productivitySum += ((game.Farmer) character).getProductivity();
-                } else if (character instanceof game.Warrior) {
-                    forceSum += ((game.Warrior) character).getForce();
+                if (character instanceof Farmer) {
+                    productivitySum += ((Farmer) character).getProductivity();
+                } else if (character instanceof Warrior) {
+                    forceSum += ((Warrior) character).getForce();
                 }
                 energySum += character.getEnergy();
 

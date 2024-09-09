@@ -2,11 +2,13 @@ package bin2csv;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class BinToCSV {
 
     public static void convertBin2CSV(String oldFilename, String newFileName) throws IOException {
-        try (DataInputStream dis = new DataInputStream(new FileInputStream(oldFilename)); BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFileName), StandardCharsets.UTF_8))) {
+        try (DataInputStream dis = new DataInputStream(new FileInputStream(oldFilename)); BufferedWriter writer = Files.newBufferedWriter(Path.of(newFileName), StandardCharsets.UTF_8)) {
 
             byte[] buffer = new byte[80];
             while (dis.read(buffer) != -1) {

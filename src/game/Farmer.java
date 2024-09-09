@@ -1,12 +1,15 @@
 package game;
 
 public class Farmer extends GameCharacter {
-    private String product;
+    private final String product;
     private int productivity;
 
 
     public Farmer(String name, String clan, int energy, String product, int productivity) {
         super(name, clan, energy);
+        if (productivity < 0) {
+            throw new IllegalArgumentException("Productivity must be positive");
+        }
         this.product = product;
         this.productivity = productivity;
     }
@@ -15,6 +18,9 @@ public class Farmer extends GameCharacter {
         return productivity;
     }
     public void setProductivity(int productivity) {
+        if (productivity < 0) {
+            throw new IllegalArgumentException("Productivity must be positive");
+        }
         this.productivity = productivity;
     }
 

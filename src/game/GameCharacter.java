@@ -6,6 +6,9 @@ public abstract class GameCharacter {
     private int energy;
 
     public GameCharacter(String name, String clan, int energy) {
+        if (energy < 0) {
+            throw new IllegalArgumentException("Energy must be positive");
+        }
         this.name = name;
         this.clan = clan;
         this.energy = energy;
@@ -21,6 +24,9 @@ public abstract class GameCharacter {
     }
 
     public void setEnergy(int energy) {
+        if (energy < 0) {
+            throw new IllegalArgumentException("Energy must be positive");
+        }
         this.energy = energy;
     }
 
