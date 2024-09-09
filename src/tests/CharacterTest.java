@@ -13,20 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterTest {
-    public List<GameCharacter> characters;
-
-    public CharacterTest(String fileName) {
-        characters = new ArrayList<>();
-        loadTextFile(fileName);
-    }
+    public static List<GameCharacter> characters;
 
     public static void main(String[] args) {
-        CharacterTest test = new CharacterTest("ressources/characters.csv");
-        test.characters.forEach(System.out::println);
-        test.savePoints("outTests/points.txt");
+        CharacterTest.loadTextFile("ressources/characters.csv");
+        characters.forEach(System.out::println);
+        CharacterTest.savePoints("outTests/points.txt");
         System.out.println();
-        Warrior firstW = test.characters.stream().filter(c -> c instanceof Warrior).map(c -> (Warrior) c).findFirst().orElse(null);
-        Farmer firstF = test.characters.stream().filter(c -> c instanceof Farmer).map(c -> (Farmer) c).findFirst().orElse(null);
+        Warrior firstW = characters.stream().filter(c -> c instanceof Warrior).map(c -> (Warrior) c).findFirst().orElse(null);
+        Farmer firstF = characters.stream().filter(c -> c instanceof Farmer).map(c -> (Farmer) c).findFirst().orElse(null);
         assert firstF != null;
         assert firstW != null;
         System.out.println(firstW);
@@ -42,8 +37,8 @@ public class CharacterTest {
 
     }
 
-    public void loadTextFile(String textFile) {
-        characters.clear();
+    public static void loadTextFile(String textFile) {
+        characters = new ArrayList<>();
         try (BufferedReader b = Files.newBufferedReader(Path.of(textFile))) {
             b.lines().forEach(line -> {
                 String[] parts = line.split(";");
@@ -67,7 +62,7 @@ public class CharacterTest {
         }
     }
 
-    public void savePoints(String fileName) {
+    public static void savePoints(String fileName) {
         int energySum = 0;
         int productivitySum = 0;
         int forceSum = 0;
@@ -79,7 +74,6 @@ public class CharacterTest {
                     forceSum += ((Warrior) character).getForce();
                 }
                 energySum += character.getEnergy();
-
             }
             b.write(energySum + "-" + forceSum + "-" + productivitySum);
         } catch (IOException e) {
