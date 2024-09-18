@@ -15,7 +15,7 @@ public class Warrior extends GameCharacter {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + ": " + super.toString() + " Weapon: " + weapon + " Force: " + force;
+        return super.toString() + " Weapon: " + weapon + " Force: " + force;
     }
 
     @Override

@@ -16,7 +16,7 @@ public abstract class GameCharacter {
 
     @Override
     public String toString() {
-        return "Name: " + name + " Clan: " + clan + " Energy: " + energy;
+        return getClass().getSimpleName()+ ": Name: " + name + " Clan: " + clan + " Energy: " + energy;
     }
 
     public int getEnergy() {

@@ -26,7 +26,7 @@ public class Farmer extends GameCharacter {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + ": " + super.toString() + " Product: " + product + " Productivity: " + productivity;
+        return  super.toString() + " Product: " + product + " Productivity: " + productivity;
     }
 
     @Override
